@@ -1,0 +1,47 @@
+{
+  "name": "claude-resume",
+  "displayName": "Claude Resume",
+  "description": "Comprehensive ATS resume optimization for Claude Code. Interview-driven resume building, rewriting, scoring, and JD tailoring across any field.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kunal Rawat",
+    "url": "https://github.com/kunalrawat425"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/kunalrawat425/claude-resume",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kunalrawat425/claude-resume.git"
+  },
+  "keywords": [
+    "resume",
+    "cv",
+    "ats",
+    "applicant-tracking-system",
+    "jobscan",
+    "career",
+    "job-search",
+    "claude-code",
+    "claude-skill"
+  ],
+  "skills": [
+    {
+      "name": "resume",
+      "path": "skills/resume",
+      "primary": true
+    },
+    {
+      "name": "resume-score",
+      "path": "skills/resume-score"
+    },
+    {
+      "name": "resume-jd-tune",
+      "path": "skills/resume-jd-tune"
+    }
+  ],
+  "requirements": {
+    "claudeCode": ">=1.0.33",
+    "node": ">=18",
+    "python": ">=3.9"
+  }
+}

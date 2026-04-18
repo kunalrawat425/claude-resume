@@ -1,0 +1,15 @@
+# Default reviewer for all PRs.
+*       @kunalrawat425
+
+# Skill manifests need extra care — they affect all users.
+/skills/                @kunalrawat425
+/.claude-plugin/        @kunalrawat425
+
+# Reference docs (best practices, scoring, interview prompts) — open to community.
+/skills/resume/references/    @kunalrawat425
+
+# Install scripts touch the user's filesystem.
+install.sh         @kunalrawat425
+install.ps1        @kunalrawat425
+uninstall.sh       @kunalrawat425
+uninstall.ps1      @kunalrawat425

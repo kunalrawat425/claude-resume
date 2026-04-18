@@ -1,0 +1,8 @@
+node_modules/
+*.docx
+*.pdf
+preview*.jpg
+*.skill
+.DS_Store
+__pycache__/
+*.pyc
