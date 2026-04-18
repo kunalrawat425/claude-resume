@@ -61,5 +61,6 @@ fi
 
 echo
 echo "Done. Restart Claude Code and try:"
-echo "  /resume build"
-echo "  /resume score path/to/resume.docx"
+echo "  /resume                         # build from scratch"
+echo "  /resume path/to/resume.docx     # rewrite existing"
+echo "  /resume-score path/to/resume.docx"
