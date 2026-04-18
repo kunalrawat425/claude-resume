@@ -1,61 +1,344 @@
 # Interview Prompts
 
-The exact questions to ask the user before drafting the resume. Don't dump these all at once — group sensibly and adapt to what the user already shared (e.g., if they uploaded a resume, parse what you can from it first and only ask the gaps).
-
-## Required (must have answers before drafting)
-
-1. **Target role title and seniority** — e.g., "Senior Backend Engineer," "Director of Product Marketing," "Staff Data Scientist."
-2. **Target industry or company type** — startup, enterprise, FAANG, public sector, agency, healthcare, fintech, etc.
-3. **Years of total relevant experience** (number).
-4. **Current or most recent title and employer.**
-5. **Do you have the actual job description?** If yes, paste it — this enables keyword tuning. If no, ask for the closest representative JD they're targeting.
-6. **Top 3–5 career achievements** with numbers (or, if they don't have numbers, ask them to add them now — don't invent).
-7. **Core stack / tools / domain skills** — the hard skills they want represented.
-8. **Any previous ATS scan results or flagged issues** (Jobscan, Enhancv, Resume Worded, TopResume) — paste them so the rewrite addresses each flag.
-9. **Desired page count** — 1 or 2. Default by experience level: <10 yrs → 1, 10+ yrs → 2.
-
-## Context / tuning
-
-10. **Location + remote / hybrid / onsite preference** + willingness to relocate.
-11. **Work authorization constraint** to flag (e.g., "Need H-1B sponsorship") or omit.
-12. **Employment gaps, career pivots, or non-linear moves** to address.
-13. **Education** — degrees, institutions, graduation years, GPA (if ≥3.5), relevant coursework (if entry-level).
-14. **Certifications, licenses, publications, patents, open-source contributions, speaking engagements** — anything that would add credibility.
-15. **Leadership scope** — team size managed, budget owned, cross-functional reach.
-16. **Languages spoken** if relevant to target market.
-17. **Tone preference** — conservative / traditional vs. modern / bold.
-18. **"Do not include" items** — old employer they want hidden, project under NDA, embarrassing role, etc.
-19. **LinkedIn URL, portfolio, GitHub** to include.
-
-## For each role (loop through every job they want listed)
-
-20. **Title, employer, dates, location** (city + state, or "Remote").
-21. **Team / org size and where they sat in it.**
-22. **What did they ship or deliver?** Specific outputs with metrics.
-23. **What did they improve?** Baseline → new state with %.
-24. **What did they lead, mentor, or influence beyond their direct work?**
-25. **Technologies / tools used** (for tech roles); methodologies / frameworks (for non-tech).
-26. **Key business outcome** their work produced — revenue lifted, cost cut, retention improved, churn reduced, customer satisfaction up, etc.
-
-## Post-draft
-
-27. **Want to tailor this resume to a specific JD?** If yes, paste the JD and run the keyword-tuning pass.
-28. **Want an ATS self-check report?** Run `scripts/score_resume.py` on the output to surface remaining flags.
-29. **Want a one-line summary to use as a LinkedIn headline / email signature?** Optional value-add.
+Use the `mcp__conductor__AskUserQuestion` tool to ask questions **one at a time** with numbered options. The tool automatically adds an "Other" free-text option, so don't include one. Adapt follow-up questions based on previous answers — skip questions already answered.
 
 ## How to phrase the interview
 
-Open with one short paragraph explaining what's about to happen and why:
+Open with one short paragraph explaining what's about to happen:
 
-> "Before I write anything, I need a few facts so the resume actually lands you the role you want. I'll ask the most important ones first, then drill into each job. If you have an actual job description for the role you're targeting, paste it — it'll roughly double the score. If you don't have metrics for some achievements, that's fine, but I'll ask for numbers as we go because vague bullets are the #1 reason resumes get filtered out."
+> "I'll walk you through a few questions to build your resume. Pick from the options or type your own answer. Let's start."
 
-Then ask the **required** block as the first batch (numbered, expecting answers in one reply). After they respond, work through context / tuning + per-role in the order it makes sense.
+Then work through the questions below, one per tool call.
+
+## Required (must have answers before drafting)
+
+### 1. Target role title and seniority
+
+```json
+{
+  "question": "What role are you targeting?",
+  "options": [
+    "Software Engineer (Junior/Mid)",
+    "Senior Software Engineer",
+    "Staff / Principal Engineer",
+    "Engineering Manager / Director",
+    "Product Manager",
+    "Data Scientist / ML Engineer",
+    "Designer (UX/UI/Product)",
+    "Marketing Manager / Director",
+    "Sales / Account Executive",
+    "Finance / Analytics"
+  ]
+}
+```
+
+### 2. Target industry or company type
+
+```json
+{
+  "question": "What type of company are you targeting?",
+  "options": [
+    "FAANG / Big Tech",
+    "Startup (seed–Series B)",
+    "Growth-stage startup (Series C+)",
+    "Enterprise / Fortune 500",
+    "Agency / Consultancy",
+    "Public sector / Government",
+    "Healthcare",
+    "Fintech / Finance",
+    "E-commerce / Retail"
+  ]
+}
+```
+
+### 3. Years of experience
+
+```json
+{
+  "question": "How many years of relevant experience do you have?",
+  "options": [
+    "0–2 years (entry level)",
+    "3–5 years",
+    "6–9 years",
+    "10–15 years",
+    "15+ years"
+  ]
+}
+```
+
+### 4. Current or most recent title and employer
+
+```json
+{
+  "question": "What's your current (or most recent) job title and company?",
+  "options": []
+}
+```
+_No options — purely free-text. User types via the auto-provided "Other" input._
+
+### 5. Job description available?
+
+```json
+{
+  "question": "Do you have the job description for your target role? Paste it if yes — it roughly doubles the keyword match score.",
+  "options": [
+    "Yes, I'll paste it now",
+    "No, I don't have one yet",
+    "I have a general idea of what I'm targeting"
+  ]
+}
+```
+_If "Yes," wait for them to paste and acknowledge before continuing._
+
+### 6. Top achievements with metrics
+
+```json
+{
+  "question": "Share your top 3–5 career achievements WITH numbers (revenue, users, cost savings, speed improvements, team size, etc.). One per line.",
+  "options": []
+}
+```
+_Free-text. If they don't have numbers, ask them to estimate — but never invent._
+
+### 7. Core skills / tools / stack
+
+```json
+{
+  "question": "What are your core hard skills, tools, or technologies? List them separated by commas.",
+  "options": []
+}
+```
+
+### 8. Prior ATS scan results
+
+```json
+{
+  "question": "Have you run your resume through any ATS scanner before (Jobscan, Resume Worded, Enhancv, TopResume)?",
+  "options": [
+    "Yes, I have results to share",
+    "No, this is my first time",
+    "Not sure what ATS scanning is"
+  ]
+}
+```
+
+### 9. Desired page count
+
+```json
+{
+  "question": "How many pages should your resume be?",
+  "options": [
+    "1 page",
+    "2 pages",
+    "Not sure — pick for me based on experience"
+  ]
+}
+```
+
+## Context / tuning (ask after required block)
+
+### 10. Work preference
+
+```json
+{
+  "question": "What's your work location preference?",
+  "options": [
+    "Remote only",
+    "Hybrid",
+    "On-site",
+    "Open to any",
+    "Willing to relocate"
+  ]
+}
+```
+
+### 11. Work authorization
+
+```json
+{
+  "question": "Any work authorization constraints to note?",
+  "options": [
+    "No constraints (citizen/PR)",
+    "Need visa sponsorship (H-1B, etc.)",
+    "Have existing work authorization (OPT, EAD, etc.)",
+    "Prefer not to disclose on resume"
+  ]
+}
+```
+
+### 12. Career gaps or pivots
+
+```json
+{
+  "question": "Any employment gaps, career pivots, or non-linear moves to address?",
+  "options": [
+    "No gaps or pivots",
+    "Yes, I have a gap to explain",
+    "Yes, I'm pivoting to a new field",
+    "Yes, both gaps and a pivot"
+  ]
+}
+```
+
+### 13. Education
+
+```json
+{
+  "question": "Tell me about your education — degree(s), institution(s), graduation year(s). Include GPA if ≥3.5.",
+  "options": []
+}
+```
+
+### 14. Certifications / extras
+
+```json
+{
+  "question": "Any certifications, publications, patents, open-source work, or speaking engagements?",
+  "options": [
+    "Yes, I'll list them",
+    "None to include"
+  ]
+}
+```
+
+### 15. Leadership scope
+
+```json
+{
+  "question": "Have you managed people or budgets? If yes, what's the scope?",
+  "options": [
+    "No direct reports",
+    "1–5 direct reports",
+    "6–15 direct reports",
+    "15+ / org-level leadership",
+    "Cross-functional influence (no direct reports)"
+  ]
+}
+```
+
+### 16. Tone preference
+
+```json
+{
+  "question": "What tone do you prefer for your resume?",
+  "options": [
+    "Conservative / traditional",
+    "Modern / bold",
+    "Balanced — professional but not stiff"
+  ]
+}
+```
+
+### 17. Anything to exclude?
+
+```json
+{
+  "question": "Anything you want excluded from the resume? (Old employer, NDA project, specific role, etc.)",
+  "options": [
+    "No, include everything",
+    "Yes, I'll specify"
+  ]
+}
+```
+
+### 18. Links to include
+
+```json
+{
+  "question": "Any links to include? (LinkedIn, GitHub, portfolio, personal site)",
+  "options": [
+    "Yes, I'll paste them",
+    "No links needed"
+  ]
+}
+```
+
+## For each role (loop through every job they want listed)
+
+Ask: "Now let's go through each role you want on the resume, starting with the most recent."
+
+For each role, ask these as separate questions:
+
+### Role title, employer, dates
+
+```json
+{
+  "question": "Role [N]: What was your title, company, dates (start–end), and location?",
+  "options": []
+}
+```
+
+### What did you ship?
+
+```json
+{
+  "question": "Role [N] at [Company]: What did you ship or deliver? Include specific metrics.",
+  "options": []
+}
+```
+
+### What did you improve?
+
+```json
+{
+  "question": "Role [N] at [Company]: What did you improve? (Before → after with %).",
+  "options": []
+}
+```
+
+### Leadership / influence
+
+```json
+{
+  "question": "Role [N] at [Company]: Did you lead, mentor, or influence beyond your direct work?",
+  "options": [
+    "Yes, I'll describe",
+    "No significant leadership in this role"
+  ]
+}
+```
+
+### Key business outcome
+
+```json
+{
+  "question": "Role [N] at [Company]: What was the key business outcome? (Revenue, cost, retention, etc.)",
+  "options": []
+}
+```
+
+After finishing all roles, ask:
+
+```json
+{
+  "question": "Any more roles to add?",
+  "options": [
+    "Yes, add another role",
+    "No, that's all — start building"
+  ]
+}
+```
+
+## Post-draft
+
+After producing the DOCX:
+
+```json
+{
+  "question": "Resume built! What next?",
+  "options": [
+    "Tune it to a specific job description",
+    "Run an ATS score check",
+    "Generate a LinkedIn headline",
+    "Make changes to the resume",
+    "I'm done, thanks!"
+  ]
+}
+```
 
 ## When the user already uploaded a resume
 
 If the user shared a resume file:
 1. Parse and extract everything you can — header, summary, all roles, dates, all bullets, skills, education.
 2. Show them a brief recap: "I read your resume. Here's what I have for each role: [summary table]. Anything missing or wrong?"
-3. Then ask only the gaps from the **required** list (target role, target industry, JD, prior ATS flags, page count) plus any **per-role** fields where you couldn't extract metrics.
-
-This avoids re-asking for info already in the document and keeps the interview short.
+3. Then ask only the gaps from the **required** list using AskUserQuestion — skip anything already extracted from the document.
