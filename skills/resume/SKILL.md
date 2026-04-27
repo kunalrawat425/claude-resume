@@ -15,9 +15,11 @@ metadata:
 **Invocation:**
 
 - `/resume` — Interview the user, then build a new resume from scratch.
-- `/resume <file>` — Parse an existing resume and rewrite it to fix every ATS flag. Also runs diagnose first to show issues before rewriting.
-- `/resume-score <file>` — Estimate the ATS score with per-category breakdown (separate skill).
-- `/resume-jd-tune <file> <jd>` — Keyword-tune a resume to a specific job description (separate skill).
+- `/resume <file>` — Parse an existing resume, **interview the user to confirm/fill gaps**, then diagnose and rewrite to fix every ATS flag.
+- `/resume-score <file>` — Brief interview for context (target role + JD), then estimate the ATS score with per-category breakdown.
+- `/resume-jd-tune <file> <jd>` — Brief interview to confirm skill claims, then keyword-tune the resume to the JD.
+
+**Interview is mandatory on every command** — see Behavior below.
 
 **Scripts:** Located at the plugin root `scripts/` directory — `build_ats_resume.js` (DOCX builder), `score_resume.py` (heuristic scorer).
 
@@ -25,14 +27,21 @@ Orchestrates a 5-phase workflow (interview → diagnose → rewrite → build �
 
 ## Behavior
 
-- **No arguments (`/resume`):** Start the interview phase — ask questions one at a time, collect all info, then build resume from scratch.
-- **File argument (`/resume path/to/resume.docx`):** Parse the existing resume, run diagnose phase, show issues, then rewrite and rebuild.
+**ALWAYS interview the user — every invocation, no exceptions.**
+
+- **No arguments (`/resume`):** Run the full interview, then build resume from scratch.
+- **File argument (`/resume path/to/resume.docx`):** Parse the file, then **still run the interview** to confirm extracted facts and fill any gaps before diagnosing or rewriting.
+- **Score (`/resume score <file>`):** Run a brief interview (target role + JD if available) so the score is contextualized to what the user is targeting, then score.
+- **Tune (`/resume tune <file> <jd>`):** Run a brief interview (gaps in JD, skills user actually has) before tuning.
+- **Diagnose (`/resume diagnose <file>`):** Same as score — brief interview for context, then diagnose.
+
+The interview always uses `mcp__conductor__AskUserQuestion` — **one question per tool call**, never batched. Numbered options where known; the tool auto-adds an "Other" free-text input on every prompt.
 
 ## Orchestration Logic
 
-The skill runs 5 phases. Don't skip phases.
+The skill runs 5 phases. Don't skip phases. **Phase 1 (Interview) is mandatory on every invocation.**
 
-1. **Interview** — Ask the questions in `references/interview-prompts.md` **one at a time** using the `mcp__conductor__AskUserQuestion` tool. For questions with known options (industry type, seniority, page count, tone, etc.), provide numbered choices. For open-ended questions (achievements, metrics, skills), use the tool with broad starter options and let the user type freely via the "Other" option (automatically provided). Ask one question per tool call, wait for answer, then ask next. Adapt follow-ups based on previous answers — skip questions already answered. Minimum required before drafting: target role, industry, years of experience, current title, JD (if available), top achievements with metrics, core skills, prior ATS flags, page-count preference. For each role the user wants listed, loop through title / employer / dates / team / shipped / improved / led / metrics.
+1. **Interview (always)** — Ask the questions in `references/interview-prompts.md` **one at a time** using the `mcp__conductor__AskUserQuestion` tool. For questions with known options (industry type, seniority, page count, tone, etc.), provide numbered choices. For open-ended questions (achievements, metrics, skills), use the tool with broad starter options and let the user type freely via the "Other" option (automatically provided). Ask one question per tool call, wait for answer, then ask next. Adapt follow-ups based on previous answers — skip questions already answered or already extracted from an uploaded file (but still confirm). Minimum required before drafting: target role, industry, years of experience, current title, JD (if available), top achievements with metrics, core skills, prior ATS flags, page-count preference. For each role the user wants listed, loop through title / employer / dates / team / shipped / improved / led / metrics. **Never draft, score, diagnose, or tune before completing the required-block interview.**
 2. **Diagnose** — If rewriting, map every issue to specific lines (vague bullet, passive voice, verb repetition, non-standard heading, missing metric). Share with the user before touching anything.
 3. **Rewrite** — Apply the rules in `references/resume-best-practices.md`. Quantify every bullet, vary verbs (no verb >2x), active voice only, canonical job titles, standard section headings, target-role signal in two places.
 4. **Build** — Populate `scripts/build_ats_resume.js` DATA object with the rewritten content, run with `node`. Validate page count; tighten margins / font / old roles if over target. Never cut metrics.
