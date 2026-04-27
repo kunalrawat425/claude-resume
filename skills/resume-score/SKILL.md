@@ -19,14 +19,26 @@ metadata:
 
 Runs heuristic checks against a resume DOCX or text file and returns per-category scores plus a weighted overall (0–100). Mirrors the rubric in the parent `resume` skill's `references/scoring-rubric.md`.
 
+## Behavior
+
+**Always interview the user briefly before scoring** — even though scoring is technically file-only, the score is more useful when contextualized to the role/seniority the user is targeting. Use `mcp__conductor__AskUserQuestion` (one question per call) to ask:
+
+1. Target role and seniority
+2. Years of experience
+3. Page-count preference (1 / 2)
+4. JD available? (paste if yes — used for keyword-coverage commentary)
+
+Skip any answers already inferable from the file's content (e.g., title in header). Then run the score script and present the results with the user's target context applied.
+
 ## Quick Reference
 
 | Step | What it does |
 |---|---|
-| 1 | Extract text from DOCX (zipfile + ElementTree) or read raw text. |
-| 2 | Detect bullets via standard markers + strong-verb prefix heuristic. |
-| 3 | Score 7 categories independently. |
-| 4 | Compute weighted overall and print breakdown. |
+| 1 | Brief interview (target role, YoE, page count, optional JD) via AskUserQuestion. |
+| 2 | Extract text from DOCX (zipfile + ElementTree) or read raw text. |
+| 3 | Detect bullets via standard markers + strong-verb prefix heuristic. |
+| 4 | Score 7 categories independently. |
+| 5 | Compute weighted overall and print breakdown with target-role commentary. |
 
 ## Categories
 

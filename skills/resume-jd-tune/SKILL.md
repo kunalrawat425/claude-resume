@@ -19,16 +19,28 @@ metadata:
 
 Tailors an existing ATS-safe resume to a specific job description by mirroring the JD's hard-skill keywords and bridging title vocabulary. Targets Jobscan's 75–80% match benchmark.
 
+## Behavior
+
+**Always interview the user briefly before tuning.** Use `mcp__conductor__AskUserQuestion` (one question per call) to ask:
+
+1. Confirm target role title from JD vs. user's actual seniority claim
+2. For each JD hard-skill the resume doesn't already mention — does the user actually have this skill? (Yes / No / Limited exposure)
+3. Tone preference for any rewritten bullets (Conservative / Modern / Balanced)
+4. Whether to add a bridging title line if titles differ materially
+
+Never claim a skill the user marks "No". Flag the gap in the report instead.
+
 ## Quick Reference
 
 | Step | What it does |
 |---|---|
-| 1 | Parse the JD — extract hard skills, required tools, exact title, key phrases. |
-| 2 | Diff against the resume's Skills section + most-recent-role bullets. |
-| 3 | Insert missing JD keywords into Skills (only if user has the skill). |
-| 4 | Rewrite 1–2 bullets in the most-recent role to use JD's exact phrasing. |
-| 5 | Add bridging title line under the name if the user's title differs from the JD title. |
-| 6 | Report projected match score before/after. |
+| 1 | Brief interview (skill confirmation, tone, bridging-title preference) via AskUserQuestion. |
+| 2 | Parse the JD — extract hard skills, required tools, exact title, key phrases. |
+| 3 | Diff against the resume's Skills section + most-recent-role bullets. |
+| 4 | Insert missing JD keywords into Skills (only if user confirmed they have the skill). |
+| 5 | Rewrite 1–2 bullets in the most-recent role to use JD's exact phrasing. |
+| 6 | Add bridging title line under the name if the user's title differs from the JD title. |
+| 7 | Report projected match score before/after, plus skill gaps. |
 
 ## Rules
 
