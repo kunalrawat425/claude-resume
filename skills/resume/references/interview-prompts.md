@@ -1,52 +1,95 @@
 # Interview Prompts
 
-Use the `mcp__conductor__AskUserQuestion` tool to ask questions **one at a time** with numbered options. The tool automatically adds an "Other" free-text option, so don't include one. Adapt follow-up questions based on previous answers — skip questions already answered.
+Use the `mcp__conductor__AskUserQuestion` tool to ask questions **one at a time** with numbered options. The tool automatically adds an "Other" free-text option, so don't include one. **Hard limit: ≤4 options per question** — chunk wider question spaces via branching (ask category first, then specifics).
 
 ## How to phrase the interview
 
 Open with one short paragraph explaining what's about to happen:
 
-> "I'll walk you through a few questions to build your resume. Pick from the options or type your own answer. Let's start."
+> "Walk you through few questions to build your resume. Pick from options or type your own. Start."
 
 Then work through the questions below, one per tool call.
 
 ## Required (must have answers before drafting)
 
-### 1. Target role title and seniority
+### 1a. Target field (branching question — 4 options max)
 
 ```json
 {
-  "question": "What role are you targeting?",
+  "question": "What field are you targeting?",
   "options": [
-    "Software Engineer (Junior/Mid)",
-    "Senior Software Engineer",
-    "Staff / Principal Engineer",
-    "Engineering Manager / Director",
-    "Product Manager",
-    "Data Scientist / ML Engineer",
-    "Designer (UX/UI/Product)",
-    "Marketing Manager / Director",
-    "Sales / Account Executive",
-    "Finance / Analytics"
+    "Engineering / Data / ML",
+    "Product / Design",
+    "Marketing / Sales",
+    "Finance / Ops / Healthcare / Legal / Other"
   ]
 }
 ```
 
-### 2. Target industry or company type
+### 1b. Target role within field
+
+If field = "Engineering / Data / ML":
+```json
+{
+  "question": "Which engineering role?",
+  "options": [
+    "Software Engineer (Junior/Mid)",
+    "Senior Software Engineer",
+    "Staff / Principal Engineer",
+    "Engineering Manager / Director"
+  ]
+}
+```
+
+If field = "Product / Design":
+```json
+{
+  "question": "Which product/design role?",
+  "options": [
+    "Product Manager",
+    "Senior / Group PM",
+    "Designer (UX/UI/Product)",
+    "Design Lead / Manager"
+  ]
+}
+```
+
+If field = "Marketing / Sales":
+```json
+{
+  "question": "Which marketing/sales role?",
+  "options": [
+    "Marketing Manager / Director",
+    "Growth / Performance Marketer",
+    "Account Executive / SDR",
+    "Sales Manager / Director"
+  ]
+}
+```
+
+If field = "Finance / Ops / Healthcare / Legal / Other":
+```json
+{
+  "question": "Which role?",
+  "options": [
+    "Finance / Analytics / Data Analyst",
+    "Operations / HR / People",
+    "Healthcare / Clinical",
+    "Legal / Education / Nonprofit / Government"
+  ]
+}
+```
+
+### 2. Target company type
 
 ```json
 {
   "question": "What type of company are you targeting?",
   "options": [
-    "FAANG / Big Tech",
-    "Startup (seed–Series B)",
-    "Growth-stage startup (Series C+)",
+    "Big Tech / FAANG",
+    "Startup (seed–Series C)",
     "Enterprise / Fortune 500",
-    "Agency / Consultancy",
-    "Public sector / Government",
-    "Healthcare",
-    "Fintech / Finance",
-    "E-commerce / Retail"
+    "Public sector / Agency / Other"
   ]
 }
 ```
@@ -55,56 +98,55 @@ Then work through the questions below, one per tool call.
 
 ```json
 {
-  "question": "How many years of relevant experience do you have?",
+  "question": "How many years of relevant experience?",
   "options": [
-    "0–2 years (entry level)",
+    "0–2 years (entry)",
     "3–5 years",
     "6–9 years",
-    "10–15 years",
-    "15+ years"
+    "10+ years"
   ]
 }
 ```
 
-### 4. Current or most recent title and employer
+### 4. Current title and employer
 
 ```json
 {
-  "question": "What's your current (or most recent) job title and company?",
+  "question": "Current (or most recent) job title and company?",
   "options": []
 }
 ```
-_No options — purely free-text. User types via the auto-provided "Other" input._
+_No options — pure free-text via auto "Other"._
 
 ### 5. Job description available?
 
 ```json
 {
-  "question": "Do you have the job description for your target role? Paste it if yes — it roughly doubles the keyword match score.",
+  "question": "Job description for your target role? (Roughly doubles keyword match.)",
   "options": [
-    "Yes, I'll paste it now",
-    "No, I don't have one yet",
-    "I have a general idea of what I'm targeting"
+    "Yes, paste it now",
+    "No, don't have one",
+    "General idea only"
   ]
 }
 ```
-_If "Yes," wait for them to paste and acknowledge before continuing._
+_If "Yes," wait for paste before continuing._
 
 ### 6. Top achievements with metrics
 
 ```json
 {
-  "question": "Share your top 3–5 career achievements WITH numbers (revenue, users, cost savings, speed improvements, team size, etc.). One per line.",
+  "question": "Top 3–5 career achievements WITH numbers (revenue, users, savings, speed, team size). One per line.",
   "options": []
 }
 ```
-_Free-text. If they don't have numbers, ask them to estimate — but never invent._
+_Free-text. If they don't have numbers, ask to estimate — never invent._
 
 ### 7. Core skills / tools / stack
 
 ```json
 {
-  "question": "What are your core hard skills, tools, or technologies? List them separated by commas.",
+  "question": "Core hard skills, tools, or technologies? Comma-separated.",
   "options": []
 }
 ```
@@ -113,41 +155,40 @@ _Free-text. If they don't have numbers, ask them to estimate — but never inven
 
 ```json
 {
-  "question": "Have you run your resume through any ATS scanner before (Jobscan, Resume Worded, Enhancv, TopResume)?",
+  "question": "Run resume through any ATS scanner before?",
   "options": [
-    "Yes, I have results to share",
-    "No, this is my first time",
-    "Not sure what ATS scanning is"
+    "Yes, have results",
+    "No, first time",
+    "Not sure what ATS is"
   ]
 }
 ```
 
-### 9. Desired page count
+### 9. Page count
 
 ```json
 {
-  "question": "How many pages should your resume be?",
+  "question": "How many pages?",
   "options": [
     "1 page",
     "2 pages",
-    "Not sure — pick for me based on experience"
+    "Pick for me based on experience"
   ]
 }
 ```
 
-## Context / tuning (ask after required block)
+## Context / tuning (after required block)
 
 ### 10. Work preference
 
 ```json
 {
-  "question": "What's your work location preference?",
+  "question": "Work location preference?",
   "options": [
     "Remote only",
     "Hybrid",
     "On-site",
-    "Open to any",
-    "Willing to relocate"
+    "Open / will relocate"
   ]
 }
 ```
@@ -156,12 +197,12 @@ _Free-text. If they don't have numbers, ask them to estimate — but never inven
 
 ```json
 {
-  "question": "Any work authorization constraints to note?",
+  "question": "Work authorization?",
   "options": [
     "No constraints (citizen/PR)",
-    "Need visa sponsorship (H-1B, etc.)",
-    "Have existing work authorization (OPT, EAD, etc.)",
-    "Prefer not to disclose on resume"
+    "Need visa sponsorship",
+    "Have OPT/EAD/etc.",
+    "Don't disclose"
   ]
 }
 ```
@@ -170,12 +211,12 @@ _Free-text. If they don't have numbers, ask them to estimate — but never inven
 
 ```json
 {
-  "question": "Any employment gaps, career pivots, or non-linear moves to address?",
+  "question": "Employment gaps or pivots?",
   "options": [
-    "No gaps or pivots",
-    "Yes, I have a gap to explain",
-    "Yes, I'm pivoting to a new field",
-    "Yes, both gaps and a pivot"
+    "None",
+    "Gap to explain",
+    "Pivot to new field",
+    "Both gap and pivot"
   ]
 }
 ```
@@ -184,7 +225,7 @@ _Free-text. If they don't have numbers, ask them to estimate — but never inven
 
 ```json
 {
-  "question": "Tell me about your education — degree(s), institution(s), graduation year(s). Include GPA if ≥3.5.",
+  "question": "Education — degree(s), institution(s), year(s). Include GPA if ≥3.5.",
   "options": []
 }
 ```
@@ -193,9 +234,9 @@ _Free-text. If they don't have numbers, ask them to estimate — but never inven
 
 ```json
 {
-  "question": "Any certifications, publications, patents, open-source work, or speaking engagements?",
+  "question": "Certifications, publications, patents, OSS, speaking?",
   "options": [
-    "Yes, I'll list them",
+    "Yes, list them",
     "None to include"
   ]
 }
@@ -205,83 +246,80 @@ _Free-text. If they don't have numbers, ask them to estimate — but never inven
 
 ```json
 {
-  "question": "Have you managed people or budgets? If yes, what's the scope?",
+  "question": "Managed people or budgets?",
   "options": [
     "No direct reports",
-    "1–5 direct reports",
-    "6–15 direct reports",
-    "15+ / org-level leadership",
-    "Cross-functional influence (no direct reports)"
+    "1–5 reports",
+    "6–15 reports",
+    "15+ / cross-functional"
   ]
 }
 ```
 
-### 16. Tone preference
+### 16. Tone
 
 ```json
 {
-  "question": "What tone do you prefer for your resume?",
+  "question": "Resume tone?",
   "options": [
     "Conservative / traditional",
     "Modern / bold",
-    "Balanced — professional but not stiff"
+    "Balanced"
   ]
 }
 ```
 
-### 17. Anything to exclude?
+### 17. Exclusions
 
 ```json
 {
-  "question": "Anything you want excluded from the resume? (Old employer, NDA project, specific role, etc.)",
+  "question": "Anything to exclude? (Old employer, NDA project, role)",
   "options": [
-    "No, include everything",
-    "Yes, I'll specify"
+    "Include everything",
+    "Yes, will specify"
   ]
 }
 ```
 
-### 18. Links to include
+### 18. Links
 
 ```json
 {
-  "question": "Any links to include? (LinkedIn, GitHub, portfolio, personal site)",
+  "question": "Links to include? (LinkedIn, GitHub, portfolio)",
   "options": [
-    "Yes, I'll paste them",
-    "No links needed"
+    "Will paste them",
+    "No links"
   ]
 }
 ```
 
-## For each role (loop through every job they want listed)
+## Per-role loop (every job to be listed)
 
-Ask: "Now let's go through each role you want on the resume, starting with the most recent."
-
-For each role, ask these as separate questions:
+Open: "Now go through each role, most recent first."
 
 ### Role title, employer, dates
 
 ```json
 {
-  "question": "Role [N]: What was your title, company, dates (start–end), and location?",
+  "question": "Role [N]: title, company, dates (start–end), location?",
   "options": []
 }
 ```
 
-### What did you ship?
+### What shipped?
 
 ```json
 {
-  "question": "Role [N] at [Company]: What did you ship or deliver? Include specific metrics.",
+  "question": "Role [N] at [Company]: What did you ship/deliver? Include metrics.",
   "options": []
 }
 ```
 
-### What did you improve?
+### What improved?
 
 ```json
 {
-  "question": "Role [N] at [Company]: What did you improve? (Before → after with %).",
+  "question": "Role [N] at [Company]: What did you improve? (Before → after with %)",
   "options": []
 }
 ```
@@ -290,55 +328,55 @@ For each role, ask these as separate questions:
 
 ```json
 {
-  "question": "Role [N] at [Company]: Did you lead, mentor, or influence beyond your direct work?",
+  "question": "Role [N] at [Company]: Lead, mentor, or influence beyond direct work?",
   "options": [
-    "Yes, I'll describe",
-    "No significant leadership in this role"
+    "Yes, will describe",
+    "No significant leadership"
   ]
 }
 ```
 
-### Key business outcome
+### Business outcome
 
 ```json
 {
-  "question": "Role [N] at [Company]: What was the key business outcome? (Revenue, cost, retention, etc.)",
+  "question": "Role [N] at [Company]: Key business outcome? (Revenue, cost, retention)",
   "options": []
 }
 ```
 
-After finishing all roles, ask:
+### More roles?
 
 ```json
 {
-  "question": "Any more roles to add?",
+  "question": "More roles to add?",
   "options": [
-    "Yes, add another role",
-    "No, that's all — start building"
+    "Yes, add another",
+    "No, start building"
   ]
 }
 ```
 
 ## Post-draft
 
-After producing the DOCX:
-
 ```json
 {
   "question": "Resume built! What next?",
   "options": [
-    "Tune it to a specific job description",
-    "Run an ATS score check",
-    "Generate a LinkedIn headline",
-    "Make changes to the resume",
-    "I'm done, thanks!"
+    "Tune to a JD",
+    "Run ATS score check",
+    "Make changes",
+    "Done, thanks"
   ]
 }
 ```
 
-## When the user already uploaded a resume
+## When user already uploaded a resume
 
-If the user shared a resume file:
-1. Parse and extract everything you can — header, summary, all roles, dates, all bullets, skills, education.
-2. Show them a brief recap: "I read your resume. Here's what I have for each role: [summary table]. Anything missing or wrong?"
-3. Then ask only the gaps from the **required** list using AskUserQuestion — skip anything already extracted from the document.
+1. Parse and extract everything — header, summary, all roles, dates, all bullets, skills, education.
+2. Show brief recap: "Read your resume. Here's what I have for each role: [summary]. Anything missing or wrong?"
+3. Then ask only the gaps from the **required** list using AskUserQuestion — skip anything already extracted (but confirm).
+
+## Tool-call constraint
+
+`mcp__conductor__AskUserQuestion` enforces ≤4 options per question. If a question has more candidates, split into a branching pair (category → specific). Never include "Other" — it's auto-added.
