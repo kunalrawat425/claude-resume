@@ -19,10 +19,33 @@
  */
 
 const fs = require('fs');
+
+// Resolve the `docx` package whether installed locally or globally (via npm -g).
+// Without this, `node build_ats_resume.js` fails with MODULE_NOT_FOUND when
+// docx was installed via `npm install -g docx`.
+function loadDocx() {
+  try {
+    return require('docx');
+  } catch (e) {
+    if (e.code !== 'MODULE_NOT_FOUND') throw e;
+    try {
+      const { execSync } = require('child_process');
+      const globalRoot = execSync('npm root -g', { encoding: 'utf8' }).trim();
+      module.paths.push(globalRoot);
+      return require('docx');
+    } catch (inner) {
+      console.error("Cannot find the 'docx' package. Install it with:");
+      console.error('  npm install -g docx');
+      console.error('  # or, in this directory: npm install docx');
+      process.exit(1);
+    }
+  }
+}
+
 const {
   Document, Packer, Paragraph, TextRun, AlignmentType, LevelFormat,
   BorderStyle, TabStopType, ExternalHyperlink,
-} = require('docx');
+} = loadDocx();
 
 // ============================================================
 // POPULATE THIS OBJECT WITH THE USER'S CONTENT
