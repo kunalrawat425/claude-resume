@@ -1,6 +1,6 @@
 <!-- Updated: 2026-05-06 -->
 
-![Fix My Resume](screenshots/cover-image.png)
+
 
 # Fix My Resume — ATS Resume Optimizer for Claude Code
 
@@ -10,7 +10,7 @@
 
 Comprehensive ATS resume builder and optimizer for Claude Code. Interview-driven — asks you the right questions first, then writes, scores, and tunes your resume to pass any major ATS scanner. Works for any field: engineering, product, marketing, design, sales, finance, data, healthcare, legal, operations, HR, education, nonprofit, government.
 
-![Resume Command Demo](screenshots/resume-command-demo.gif)
+![Fix My Resume](https://witoghpdfocywiosmrzv.supabase.co/storage/v1/object/public/meta/image.png)
 
 [![CI](https://github.com/kunalrawat425/fix-my-resume/actions/workflows/ci.yml/badge.svg)](https://github.com/kunalrawat425/fix-my-resume/actions/workflows/ci.yml)
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blue)](https://claude.ai/claude-code)
@@ -19,7 +19,6 @@ Comprehensive ATS resume builder and optimizer for Claude Code. Interview-driven
 [![Stars](https://img.shields.io/github/stars/kunalrawat425/fix-my-resume?style=social)](https://github.com/kunalrawat425/fix-my-resume/stargazers)
 [![Downloads](https://img.shields.io/github/downloads/kunalrawat425/fix-my-resume/total?label=downloads&color=brightgreen)](https://github.com/kunalrawat425/fix-my-resume/releases)
 [![Try Free](https://img.shields.io/badge/Try%20Free-Claude%20Code-blueviolet?logo=anthropic)](https://claude.ai/claude-code)
-
 ---
 
 ## A Story First
