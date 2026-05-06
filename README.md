@@ -1,31 +1,132 @@
-<!-- Updated: 2026-04-28 -->
+<!-- Updated: 2026-05-06 -->
 
-![Claude Resume](screenshots/cover-image.png)
+![Fix My Resume](screenshots/cover-image.png)
 
-# Claude Resume - ATS Resume Optimization Skill for Claude Code
+# Fix My Resume — ATS Resume Optimizer for Claude Code
 
-Comprehensive ATS resume builder and optimizer for Claude Code. 3 core sub-skills covering interview-driven resume building, ATS score estimation, and JD keyword tuning. Works for any field — engineering, product, marketing, design, sales, finance, data, healthcare, legal, operations, HR, education, nonprofit, government. Synthesizes 2026 best practices from Jobscan, Resume Worded, Enhancv, Harvard OCS, Indeed, LinkedIn Talent Blog, Workday, and Greenhouse parsing docs.
+> **Your resume is getting rejected before a human ever reads it.**
+> ATS software auto-screens 98% of applicants. Most resumes fail on vague bullets, passive voice, repeated verbs, and missing keywords — not on qualifications.
+> This skill fixes that.
+
+Comprehensive ATS resume builder and optimizer for Claude Code. Interview-driven — asks you the right questions first, then writes, scores, and tunes your resume to pass any major ATS scanner. Works for any field: engineering, product, marketing, design, sales, finance, data, healthcare, legal, operations, HR, education, nonprofit, government.
 
 ![Resume Command Demo](screenshots/resume-command-demo.gif)
 
-[![CI](https://github.com/kunalrawat425/claude-resume/actions/workflows/ci.yml/badge.svg)](https://github.com/kunalrawat425/claude-resume/actions/workflows/ci.yml)
+[![CI](https://github.com/kunalrawat425/fix-my-resume/actions/workflows/ci.yml/badge.svg)](https://github.com/kunalrawat425/fix-my-resume/actions/workflows/ci.yml)
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blue)](https://claude.ai/claude-code)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/github/v/release/kunalrawat425/claude-resume)](https://github.com/kunalrawat425/claude-resume/releases)
+[![Version](https://img.shields.io/github/v/release/kunalrawat425/fix-my-resume)](https://github.com/kunalrawat425/fix-my-resume/releases)
+
+---
+
+## Why This Exists
+
+Most resume advice is generic. Most resume tools are expensive SaaS. Most AI resume generators hallucinate metrics.
+
+This skill is different:
+
+- **Interview-first** — never writes a word until it knows your actual achievements, metrics, and target role
+- **Refuses to fabricate** — if there's no number, it asks you for one
+- **ATS-native output** — single-column DOCX, Arial font, no tables, no images, no text boxes — exactly what Workday, Greenhouse, and Lever parse correctly
+- **Free** — runs in Claude Code, open source, MIT licensed
+
+---
+
+## Before & After ATS Score
+
+Here's what the skill catches and fixes on a real bad resume:
+
+### Before (typical first-draft resume)
+
+```
+OBJECTIVE
+Hard-working, passionate team player looking for opportunities.
+
+WORK HISTORY
+Software Engineer at BigCo, 2020-Present
+- Was responsible for working on backend services
+- Tasks included writing code and reviewing PRs
+- Worked on improving performance
+- Worked on migrating systems
+- Worked on debugging issues
+
+Engineer at SmallCo, 2018-2020
+- Responsibilities included building features
+- Was involved in deployments
+- Was tasked with fixing bugs
+```
+
+```
+ATS Score: 73.5/100   ← Below recruiter visibility threshold
+
+  parsability      90/100
+  headings         70/100   ← Missing standard sections
+  quantification   55/100   ← 0/10 bullets have a number
+  verbs            78/100   ← "Worked" repeated 5x, "Was" repeated 3x
+  active_voice     75/100   ← 5 passive constructions
+  vague_filler     50/100   ← "team player", "responsible for", "tasks included"
+  length           70/100
+```
+
+### After (skill-rewritten)
+
+```
+PROFESSIONAL SUMMARY
+Senior Software Engineer with 6 years building distributed payment systems.
+Shipped retry pipeline recovering $18M annually. Cut infra cost 38%.
+
+TECHNICAL SKILLS
+Languages: Go, Python, TypeScript
+Backend: gRPC, Postgres, Redis, Kafka
+Cloud & DevOps: AWS, Kubernetes, Terraform
+
+PROFESSIONAL EXPERIENCE
+Software Engineer, BigCo | 2020–Present
+- Shipped retry pipeline recovering $18M in failed payments annually
+- Reduced p99 order latency 42% by replacing JSON with protobuf
+- Migrated 9 services to gRPC, cutting east-west bandwidth cost 38%
+- Mentored 3 engineers; 2 promoted to senior in 14 months
+
+Engineer, SmallCo | 2018–2020
+- Built feature flag service used by 40 engineers across 5 product teams
+- Cut deploy time 78% (45 min → 10 min) by parallelizing test suite
+- Resolved 120+ production bugs, lifted SLO from 99.5% to 99.92%
+```
+
+```
+ATS Score: 94.5/100   ← Strong — passes any major scanner
+
+  parsability      100/100
+  headings         100/100
+  quantification    98/100   ← 8/8 bullets quantified (100%)
+  verbs             95/100   ← No verb used 3+ times
+  active_voice      96/100   ← 0 passive constructions
+  vague_filler      96/100   ← No vague filler detected
+  length            70/100   ← Short sample; real resume hits 95+
+```
+
+**+21 points. Same person, same experience. Just better writing.**
+
+---
 
 ## Table of Contents
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Commands](#commands)
+- [What It Does](#what-it-does)
+- [What It Cannot Do](#what-it-cannot-do)
+- [Use Cases](#use-cases)
 - [Features](#features)
+- [Limitations](#limitations)
 - [Architecture](#architecture)
 - [Extensions](#extensions)
 - [Ecosystem](#ecosystem)
-- [Documentation](#documentation)
 - [Requirements](#requirements)
 - [Uninstall](#uninstall)
 - [Contributing](#contributing)
+
+---
 
 ## Installation
 
@@ -33,32 +134,32 @@ Comprehensive ATS resume builder and optimizer for Claude Code. 3 core sub-skill
 
 ```bash
 # Add marketplace (one-time)
-/plugin marketplace add kunalrawat425/claude-resume
+/plugin marketplace add kunalrawat425/fix-my-resume
 
 # Install plugin
-/plugin install resume@claude-resume
+/plugin install resume@fix-my-resume
 ```
 
-### Manual Install (Unix/macOS/Linux)
+### Manual Install (macOS / Linux)
 
 ```bash
-git clone --depth 1 https://github.com/kunalrawat425/claude-resume.git
-bash claude-resume/install.sh
+git clone --depth 1 https://github.com/kunalrawat425/fix-my-resume.git
+bash fix-my-resume/install.sh
 ```
 
 <details>
 <summary>One-liner (curl)</summary>
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kunalrawat425/claude-resume/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kunalrawat425/fix-my-resume/main/install.sh | bash
 ```
 
-Prefer to review the script before running?
+Prefer to review first?
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kunalrawat425/claude-resume/main/install.sh > install.sh
-cat install.sh        # review
-bash install.sh       # run when satisfied
+curl -fsSL https://raw.githubusercontent.com/kunalrawat425/fix-my-resume/main/install.sh > install.sh
+cat install.sh
+bash install.sh
 rm install.sh
 ```
 
@@ -67,284 +168,286 @@ rm install.sh
 ### Windows (PowerShell)
 
 ```powershell
-git clone --depth 1 https://github.com/kunalrawat425/claude-resume.git
-powershell -ExecutionPolicy Bypass -File claude-resume\install.ps1
+git clone --depth 1 https://github.com/kunalrawat425/fix-my-resume.git
+powershell -ExecutionPolicy Bypass -File fix-my-resume\install.ps1
 ```
 
-> **Why git clone instead of `irm | iex`?** Claude Code's own security guardrails flag `irm ... | iex` as a supply chain risk (downloading and executing remote code with no verification). The git clone approach lets you inspect the script at `claude-resume\install.ps1` before running it.
+> **Why git clone instead of `irm | iex`?** Piping remote scripts into your shell runs unreviewed code. Clone lets you inspect `install.ps1` first.
+
+---
 
 ## Quick Start
 
 ```bash
-# Start Claude Code
-claude
-
-# Build a new resume — skill always interviews you first
+# Build a new resume from scratch — skill interviews you first
 /resume
 
-# Score an existing resume (still asks clarifying questions)
-/resume score path/to/resume.docx
-
-# Rewrite an existing resume to fix every ATS flag
+# Rewrite an existing resume (fixes every ATS flag)
 /resume path/to/resume.docx
 
-# Tailor a resume to a specific job description
+# Score your resume (0–100 with per-category breakdown)
+/resume score path/to/resume.docx
+
+# Tailor your resume to a specific job description
 /resume tune path/to/resume.docx path/to/jd.txt
 
-# Diagnose ATS issues without rewriting
+# Diagnose issues without rewriting
 /resume diagnose path/to/resume.docx
 ```
 
-> **Always-on interview.** Every invocation begins with a structured set of questions via `mcp__conductor__AskUserQuestion` — one question at a time, numbered options, free-text "Other" available on every prompt. The skill never drafts, scores, or tunes until the required-block answers are collected. See [Interview Prompts](skills/resume/references/interview-prompts.md).
+> **Interview always fires first.** Every command opens with a set of structured questions via numbered options — one at a time, never batched. Picks up where you left off if you already provided info.
 
-### Demo:
-
-![Resume Build Demo](screenshots/resume-build-demo.gif)
-
-**`/resume`: interview-first build flow:**
-
-![Resume Interview Demo](screenshots/resume-interview-demo.gif)
+---
 
 ## Commands
 
 | Command | Description |
 |---------|-------------|
-| `/resume` | Interview-driven builder. Always asks the required-block questions before drafting. |
-| `/resume <file>` | Parse existing resume, run interview to fill gaps, diagnose, then rewrite. |
-| `/resume score <file>` | Heuristic ATS score with per-category breakdown across 7 dimensions. |
-| `/resume diagnose <file>` | Lists every ATS issue mapped to specific lines, no rewriting. |
-| `/resume tune <file> <jd>` | Tailors a resume to a JD; targets 75–80% Jobscan match. |
-| `/resume rewrite <file>` | Alias for `/resume <file>` — rewrite an existing resume. |
+| `/resume` | Interview → build ATS-safe resume from scratch |
+| `/resume <file>` | Parse existing resume → interview to fill gaps → diagnose → rewrite |
+| `/resume score <file>` | Heuristic ATS score, 7 categories, 0–100 weighted |
+| `/resume diagnose <file>` | List every issue by line, no rewrite |
+| `/resume tune <file> <jd>` | Keyword-tune to JD; targets 75–80% Jobscan match |
 
-### `/resume`
-**Interview-Driven Resume Builder**
+---
 
-Walks the user through a structured interview before writing a single line. Always asks the questions in `references/interview-prompts.md` — one at a time, numbered options where applicable, free-text "Other" on every prompt.
+## What It Does
 
-**Capabilities:**
-- 9 required questions (target role, industry, YoE, current title, JD, achievements, skills, prior ATS results, page count)
-- 9 context/tuning questions (work preference, authorization, gaps, education, certifications, leadership, tone, exclusions, links)
-- Per-role loop — title, employer, dates, shipped, improved, led, business outcome
-- Field detection picks the right skills-section structure
-- Career-stage detection picks length and ordering
-- Refuses to fabricate metrics — asks for the number instead
+### Catches and fixes every common ATS failure mode
 
-### `/resume score [file]`
-**Heuristic ATS Score Estimator**
+| Issue | Example | Fix applied |
+|-------|---------|-------------|
+| **Vague filler** | "hard worker", "team player", "results-driven" | Removed — banned list enforced |
+| **Passive voice** | "was responsible for", "tasks included" | Rewritten to active verbs |
+| **Verb repetition** | "Worked" used 5× | Diversified: Shipped / Built / Migrated / Mentored / Reduced |
+| **No metrics** | "improved performance" | Asks you for the number — never invents |
+| **Non-standard headings** | "Career History", "Skillset" | Normalized to EXPERIENCE / SKILLS / EDUCATION |
+| **Wrong format** | Tables, columns, text boxes, photos | Produces single-column plain DOCX |
+| **Missing keywords** | JD says "Kubernetes", resume says "k8s" | Adds both (parsers handle one or the other) |
+| **Fabricated titles** | "Ninja", "Guru", "Wizard" | Replaced with canonical titles |
+| **Header contact info** | Email in header/footer | Moved to body (Workday/Greenhouse parse body only) |
 
-Runs `scripts/score_resume.py` over a DOCX or text file and returns per-category scores.
+### Produces a real, ready-to-submit DOCX
 
-**Capabilities:**
-- Parsability (column / whitespace bleed)
-- Section heading match against canonical list
-- Quantification ratio (% of bullets with a number)
-- Verb variety (flags any verb 3+ times)
-- Active voice (regex passive detection)
-- Vague filler (exact-match buzzword list)
-- Length appropriate to detected stage
-- Weighted overall 0–100
+- Single-column layout (no tables, images, text boxes)
+- Arial font, US Letter, 0.5–0.6" margins
+- True OOXML bullet numbering — not unicode hacks
+- Contact info in body (not header/footer)
+- ATS-safe hyperlinks in body text
 
-### `/resume tune [file] [jd]`
-**JD Keyword Tuner**
+### Scores before and after
 
-Mirrors the JD's hard-skill keywords and bridging title vocabulary into the resume.
+`/resume score` runs a Python heuristic across 8 categories and returns a weighted 0–100. Shows exactly what's dragging the score down and by how much.
 
-**Capabilities:**
-- Hard-skill keyword extraction from JD
-- Skills-section gap fill (only for skills the user actually has)
-- Bullet rewrite in most-recent role to mirror JD phrasing
-- Bridging title line when user's title differs from target
-- Projected Jobscan match score before/after
-- Refuses to claim skills the user doesn't have
+---
 
-### `/resume diagnose [file]`
-**Issue Diagnostic, No Rewrite**
+## What It Cannot Do
 
-Lists every ATS issue mapped to specific lines, ranked Critical → High → Medium → Low. Useful when the user wants to fix things by hand.
+Be explicit about limits:
+
+| Cannot | Why |
+|--------|-----|
+| **Invent metrics** | Fabricated numbers are a fireable offense. Asks you instead. |
+| **Guarantee job interviews** | ATS score ≠ hiring decision. Human review still matters. |
+| **Fetch your LinkedIn profile** | Requires LinkedIn MCP extension (optional add-on) |
+| **Submit to job portals** | Produces the DOCX — you submit it |
+| **Do real Jobscan scan** | Heuristic scorer mirrors Jobscan methodology, not API-connected |
+| **Build designer resumes** | Two-column, photo, sidebar resumes score lower on ATS — deliberately not supported |
+| **Apply for remote/visa sponsorship** | Puts your preference on the resume — doesn't apply |
+| **Write cover letters** | Separate skill (see Ecosystem) |
+| **Guarantee accuracy of your own data** | Flags user-provided metrics as "unverifiable" but includes them |
+| **Handle non-English resumes** | English only in v1 |
+
+---
+
+## Use Cases
+
+### When to use this skill
+
+**You're applying and getting no callbacks**
+→ `/resume diagnose your-resume.docx` — see exactly what ATS is rejecting and why
+
+**You want to rewrite from scratch for a new role**
+→ `/resume` — interview-driven, starts fresh, never borrows from old positions
+
+**You have a resume but it's vague and metric-free**
+→ `/resume your-resume.docx` — rewrite phase quantifies every bullet and cuts filler
+
+**You found a specific job posting you want**
+→ `/resume tune your-resume.docx jd.txt` — keyword-match to that exact JD
+
+**You want a score before submitting**
+→ `/resume score your-resume.docx` — 30-second pass, see where you land
+
+**You're mid-level changing industries**
+→ `/resume` — field detection picks the right skills-section structure for the target industry
+
+**You're senior/staff pivoting to a new company**
+→ `/resume your-resume.docx` + `/resume tune` — preserve leadership signals, tune keywords
+
+**You haven't updated your resume in years**
+→ `/resume your-resume.docx` — extracts all your existing content, modernizes format and language
+
+### When NOT to use this skill
+
+- You need a visually designed, two-column, PDF portfolio resume for creative roles
+- You want to generate fake experience or credentials
+- You need cover letters (use a cover letter skill)
+- You want to auto-apply to jobs at scale
+
+---
 
 ## Features
 
-### ATS Scoring (Current Methodology)
-- **Quantification ratio** — target ≥60% of bullets carry a number, 90%+ ideal
-- **Verb variety** — no verb used 3+ times (modern ATS flag this)
-- **Active voice** — 0 passive constructions
-- **Heading match** — 4 canonical: Summary, Skills, Experience, Education
+### Interview-First, Every Time
+Every command — `/resume`, `/resume <file>`, `/resume score`, `/resume tune` — opens with a structured interview. Questions come one at a time with numbered choices (≤4 options per prompt, tool constraint). Adapts based on answers; skips questions already answered from an uploaded file.
 
-> Note: Modern AI-layered ATS in 2026 (Jobscan AI, Eightfold) cross-check skill claims against bullet evidence. Keyword stuffing without supporting bullets gets penalized.
-
-### Interview-First Workflow
-Every command — even `/resume score` and `/resume tune` — opens with a structured interview:
-- **Required block** asked first (target role, industry, YoE, JD, achievements, skills, page count)
-- **Context block** asked after (work preference, authorization, gaps, leadership scope, tone)
-- **Per-role loop** for every job to be listed
-- One question per `AskUserQuestion` tool call — never batched
+**Required block (always asked):**
+target role → company type → years of experience → current title → JD (paste or skip) → top achievements with metrics → core skills → prior ATS scan results → page count
 
 ### Career-Stage Aware
-- **Entry (0–2 yrs)** — 1 page, education first
-- **Mid (3–9 yrs)** — 1 page preferred, 2 if dense
-- **Senior / Staff / Principal (10+ yrs)** — 2 pages, leadership signals
-- **Executive (Director+)** — 2–3 pages, P&L / org scale signals
+
+| Stage | Length | Structure |
+|-------|--------|-----------|
+| Entry (0–2 yrs) | 1 page | Education first |
+| Mid (3–9 yrs) | 1–2 pages | Experience first |
+| Senior / Staff (10+ yrs) | 2 pages | Leadership signals prominent |
+| Executive (Director+) | 2–3 pages | P&L / org scale, board section |
 
 ### Universal Field Support
-| Field | Skills-section structure |
-|-------|--------------------------|
-| Software Engineering | Languages, Backend, Frontend, Data, Cloud & DevOps, Architecture |
+
+| Field | Skills structure |
+|-------|-----------------|
+| Software Engineering | Languages, Backend, Frontend, Cloud & DevOps, Architecture |
 | Product Management | Methodologies, Tools, Domains, Analytics, Leadership |
 | Marketing | Channels, Tools, Analytics, Content, Strategy |
-| Design (UX/UI/Product) | Tools, Methods, Disciplines, Research, Leadership |
-| Sales | Methodologies, Tools, Industries, Skills, Languages |
-| Finance / Analytics | Tools, Modeling, Reporting, Compliance, Domain |
-| Data / ML | Languages, ML/DL, Data Platforms, Cloud, Tools |
-| Healthcare | Clinical Skills, EMR Systems, Certifications, Specialties |
-| Legal | Practice Areas, Software, Languages, Bar Admissions |
-| Operations / HR | Frameworks, Software, Domains, Compliance, Languages |
+| Design | Tools, Methods, Disciplines, Research, Leadership |
+| Sales | Methodologies, Tools, Industries, Skills |
+| Finance / Analytics | Tools, Modeling, Reporting, Compliance |
+| Data / ML | Languages, ML/DL, Data Platforms, Cloud |
+| Healthcare | Clinical Skills, EMR, Certifications, Specialties |
+| Legal | Practice Areas, Bar Admissions, Software |
+| Operations / HR | Frameworks, Software, Domains, Compliance |
 
-### DOCX Builder
-- Single-column ATS-safe output (no tables / images / text boxes)
-- Arial body font, true bullet numbering, plain-text contact line
-- Contact info in body, not header / footer (parses correctly in Workday / Greenhouse)
-- Auto page-count enforcement (margins → font → trim oldest roles, never cuts metrics)
+### Quality Gates (enforced before every DOCX)
 
-### Quality Gates
-Before producing the DOCX:
-- Quantification ≥60% of bullets
-- 0 passive voice constructions
-- No verb used >2x across the resume
+- ≥60% of bullets carry a number (target 90%+)
+- No verb used more than 2× across the whole resume
+- Zero passive voice constructions
 - Exactly 4 canonical section headings
-- Page count matches user's target
-- No fabricated metrics — every number traces to user input
-- Banned filler ("hard worker", "passionate", "results-driven") absent
+- Page count matches your preference
+- No fabricated metrics
+- No vague filler (banned list: "hard worker", "passionate", "team player", "results-driven", "synergy", "leverage", "dynamic")
+- Contact info in body, not header/footer
+
+---
+
+## Limitations
+
+Know these before you start:
+
+**The heuristic scorer is not Jobscan.** It mirrors Jobscan/Resume Worded methodology using regex and word counts. It does not call the Jobscan API. Scores may differ from real scanner output by ±5–10 points. Use the score to find issues, not as a final pass/fail.
+
+**DOCX bullet detection on built resumes.** The score estimator's bullet detector uses regex against standard markers. The DOCX builder uses OOXML true bullets, which the parser reads correctly — but the text-extract path may undercount bullets. Run the scorer on a `.txt` export if you want a perfect count.
+
+**No real-time JD fetching.** `/resume tune` requires you to paste the JD text or provide a local file. JD URL fetching requires the optional JD Crawler extension.
+
+**English only.** Field detection, verb tally, and passive voice detection are English-only. Non-English resumes will still parse and format, but the language quality checks won't fire.
+
+**Long careers hit the 2-page wall.** 20+ years of experience will be trimmed to 2 pages. The oldest roles go to 1–2 bullets. Metrics are never cut — context sometimes is.
+
+**Designer resumes deliberately unsupported.** Two-column, photo, sidebar, pill-tag layouts score 20–40 points lower on ATS. This skill does not produce them. Use a visual design tool for portfolio/recruiter-facing versions.
+
+---
 
 ## Architecture
 
 ```
-~/.claude/plugins/claude-resume/
+~/.claude/plugins/fix-my-resume/
 ├── skills/
-│   ├── resume/             # Primary orchestrator skill
-│   ├── resume-score/       # Heuristic ATS scorer
-│   └── resume-jd-tune/     # JD keyword tuner
+│   ├── resume/               # Primary skill — orchestrates 5-phase workflow
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       ├── interview-prompts.md   # All interview questions (≤4 opts each)
+│   │       ├── resume-best-practices.md
+│   │       └── scoring-rubric.md
+│   ├── resume-score/         # Standalone scorer
+│   └── resume-jd-tune/       # Standalone JD tuner
 ├── scripts/
-│   ├── build_ats_resume.js # DOCX builder (docx-js)
-│   └── score_resume.py     # Pure-Python heuristic scorer
-├── references/             # Best-practices, interview prompts, rubric
-└── docs/                   # Installation, commands, architecture
+│   ├── build_ats_resume.js   # DOCX builder (docx-js, auto-resolves global install)
+│   └── score_resume.py       # Heuristic scorer (pure Python, no deps)
+└── docs/
+    ├── INSTALLATION.md
+    ├── COMMANDS.md
+    ├── ARCHITECTURE.md
+    └── TROUBLESHOOTING.md
 ```
 
-The primary skill orchestrates a 5-phase workflow: **interview → diagnose → rewrite → build → score**. Phases are not skipped. References sit beside `SKILL.md` so the model loads only what it needs:
+**5-phase workflow — phases never skipped:**
 
-- `references/resume-best-practices.md` — full 2026 do's/don'ts across 10 sections
-- `references/interview-prompts.md` — exact questions the skill asks, with `AskUserQuestion` JSON
-- `references/scoring-rubric.md` — per-category weighting for the score estimator
+1. **Interview** — AskUserQuestion, one at a time, ≤4 options, mandatory on every command
+2. **Diagnose** — map every issue to specific lines before touching anything
+3. **Rewrite** — apply best-practices rules, enforce quality gates
+4. **Build** — populate `build_ats_resume.js` DATA object, run with `node`, validate page count
+5. **Score** — run `score_resume.py`, report per-category, confirm quality gate pass
 
-### Recently Added
-- v1.0 — Always-on interview phase across every command
-- v1.0 — `mcp__conductor__AskUserQuestion` integration for one-question-at-a-time UX
-- v1.0 — Universal field support (was engineering-only)
-- v1.0 — JD keyword tuning sub-skill
-- v1.0 — Heuristic Python score estimator
-
-## Requirements
-
-- Claude Code 1.0.33+ (for plugin install) or any Claude environment that supports skills
-- Node.js 18+ and `docx` package (`npm install -g docx`) — for the DOCX builder
-- Python 3.9+ — for the score estimator
-- Optional: LibreOffice (`soffice`) and `pdftoppm` for PDF preview generation
-
-## Uninstall
-
-```bash
-# Plugin install
-/plugin uninstall resume@claude-resume
-/plugin marketplace remove kunalrawat425/claude-resume
-
-# Manual install (Unix/macOS/Linux)
-bash uninstall.sh
-
-# Windows (PowerShell)
-powershell -ExecutionPolicy Bypass -File uninstall.ps1
-```
-
-<details>
-<summary>One-liner (curl)</summary>
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/kunalrawat425/claude-resume/main/uninstall.sh | bash
-```
-
-</details>
+---
 
 ## Extensions
 
-Optional add-ons that integrate external data sources via MCP servers.
+Optional add-ons via MCP servers.
 
 ### LinkedIn Profile Sync
-
-Pull resume content directly from a LinkedIn profile to skip the interview phase. Requires the LinkedIn MCP connector.
-
+Pull resume content from your LinkedIn profile to skip the interview phase.
 ```bash
-# Install (requires LinkedIn MCP)
 ./extensions/linkedin/install.sh
 ```
-
-```bash
-# Example commands
-/resume linkedin sync linkedin.com/in/your-handle
-/resume linkedin diff linkedin.com/in/your-handle resume.docx
-```
-
-See [LinkedIn Extension](extensions/linkedin/README.md) for full documentation.
+See [LinkedIn Extension](extensions/linkedin/README.md).
 
 ### Jobscan API
-
-Submit the produced DOCX to Jobscan's real ATS scanner and pull the actual match score back into Claude. Requires a Jobscan API key.
-
+Submit the built DOCX to Jobscan's real scanner, get the actual score back.
 ```bash
-# Install (requires Jobscan API key)
 ./extensions/jobscan/install.sh
 ```
-
-```bash
-# Example commands
-/resume jobscan score resume.docx jd.txt
-/resume jobscan compare v1.docx v2.docx jd.txt
-```
-
-See [Jobscan Extension](extensions/jobscan/README.md) for full documentation.
+See [Jobscan Extension](extensions/jobscan/README.md).
 
 ### JD Crawler
-
-Fetch job descriptions from URLs (LinkedIn Jobs, Indeed, Greenhouse, Lever, Workday) and feed them into `/resume tune` automatically.
-
+Fetch a JD from a URL (LinkedIn Jobs, Indeed, Greenhouse, Lever, Workday) for `/resume tune`.
 ```bash
-# Install extension
 ./extensions/jd-crawler/install.sh
 ```
+See [JD Crawler Extension](extensions/jd-crawler/README.md).
 
-```bash
-# Example commands
-/resume tune resume.docx https://jobs.example.com/listing/123
-```
-
-See [JD Crawler Extension](extensions/jd-crawler/README.md) for full documentation.
+---
 
 ## Ecosystem
 
-Claude Resume is part of a family of Claude Code skills that work together:
-
 | Skill | What it does | How it connects |
 |-------|--------------|-----------------|
-| [Claude Resume](https://github.com/kunalrawat425/claude-resume) | ATS resume builder, scorer, JD tuner | Core — generates the DOCX you submit to portals |
-| [Claude Cover Letter](https://github.com/kunalrawat425/claude-cover-letter) | Tailored cover letters from resume + JD | Companion — reuses resume metrics and target-role positioning |
-| [Claude Job Search](https://github.com/kunalrawat425/claude-job-search) | LinkedIn / Indeed / Greenhouse JD discovery | Feeds JDs into `/resume tune` |
-| [Claude Interview Prep](https://github.com/kunalrawat425/claude-interview-prep) | Mock interview drills from resume bullets | Pulls bullet metrics for behavioral questions |
+| [Fix My Resume](https://github.com/kunalrawat425/fix-my-resume) | ATS builder, scorer, JD tuner | Core — produces the DOCX |
+| [Claude Cover Letter](https://github.com/kunalrawat425/claude-cover-letter) | Tailored cover letters | Reuses your resume metrics + target role |
+| [Claude Job Search](https://github.com/kunalrawat425/claude-job-search) | LinkedIn / Indeed / Greenhouse discovery | Feeds JDs into `/resume tune` |
+| [Claude Interview Prep](https://github.com/kunalrawat425/claude-interview-prep) | Mock interview drills | Pulls bullet metrics for behavioral questions |
 
-**Workflow example:**
-
-1. `/job-search find "Senior Backend Engineer remote"` — get matching JDs
-2. `/resume tune my-resume.docx jd-1.txt` — tailor for the top match
-3. `/cover-letter draft my-resume.docx jd-1.txt` — generate matching cover letter
-4. `/interview-prep behavioral my-resume.docx` — drill behavioral questions
+**Full job-search workflow:**
+```
+1. /job-search find "Senior Backend Engineer remote"   — get matching JDs
+2. /resume tune my-resume.docx jd-1.txt               — tailor to top match
+3. /cover-letter draft my-resume.docx jd-1.txt        — write cover letter
+4. /interview-prep behavioral my-resume.docx           — drill behavioral Qs
 5. Submit DOCX + cover letter via the portal
+```
+
+---
+
+## Requirements
+
+- Claude Code 1.0.33+ (for plugin install) or any Claude environment with skill support
+- Node.js 18+ — DOCX builder (`npm install -g docx` run automatically by `install.sh`)
+- Python 3.9+ — heuristic scorer (no extra packages)
+- Optional: LibreOffice (`soffice`) for PDF preview
+
+---
 
 ## Documentation
 
@@ -356,34 +459,42 @@ Claude Resume is part of a family of Claude Code skills that work together:
 - [Interview Prompts](skills/resume/references/interview-prompts.md)
 - [Scoring Rubric](skills/resume/references/scoring-rubric.md)
 
-## Community Contributors
+---
 
-Built initially for personal use, opened up because the rewrite rules generalize across fields.
+## Uninstall
+
+```bash
+# Plugin install
+/plugin uninstall resume@fix-my-resume
+/plugin marketplace remove kunalrawat425/fix-my-resume
+
+# Manual
+bash uninstall.sh         # macOS / Linux
+powershell -ExecutionPolicy Bypass -File uninstall.ps1   # Windows
+```
+
+---
+
+## Community Contributors
 
 | Contributor | Contribution |
 |-------------|--------------|
-| **Kunal Rawat** | Initial skill, DOCX builder, score estimator, interview prompts, always-on interview UX |
-| _Your name here_ | Open a PR to add a field-specific skills template, an extension, or a translation |
+| **Kunal Rawat** | Initial skill, DOCX builder, scorer, interview prompts, always-on interview UX |
+| _Your name here_ | Open a PR — field templates, extensions, translations welcome |
 
-See [CONTRIBUTORS.md](CONTRIBUTORS.md) for contribution guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
-
-## Contributing
-
-Contributions welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before submitting PRs.
+MIT — see [LICENSE](LICENSE).
 
 ---
 
 Built for Claude Code by [@kunalrawat425](https://github.com/kunalrawat425)
 
----
-
 ## Author
 
-Built by Kunal Rawat — Senior Software Engineer focused on AI workflow tooling.
+Kunal Rawat — Senior Software Engineer focused on AI workflow tooling.
 
 - [LinkedIn](https://linkedin.com/in/kunalrawat425)
 - [GitHub](https://github.com/kunalrawat425)
