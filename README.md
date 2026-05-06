@@ -211,52 +211,82 @@ powershell -ExecutionPolicy Bypass -File fix-my-resume\install.ps1
 
 ---
 
-## What It Does
+## What It Can Do
 
 ### Catches and fixes every common ATS failure mode
 
-| Issue | Example | Fix applied |
-|-------|---------|-------------|
-| **Vague filler** | "hard worker", "team player", "results-driven" | Removed — banned list enforced |
+| Issue | Before | After |
+|-------|--------|-------|
+| **Vague filler** | "hard worker", "team player", "results-driven" | Removed — banned list of 40+ phrases enforced |
 | **Passive voice** | "was responsible for", "tasks included" | Rewritten to active verbs |
 | **Verb repetition** | "Worked" used 5× | Diversified: Shipped / Built / Migrated / Mentored / Reduced |
-| **No metrics** | "improved performance" | Asks you for the number — never invents |
-| **Non-standard headings** | "Career History", "Skillset" | Normalized to EXPERIENCE / SKILLS / EDUCATION |
-| **Wrong format** | Tables, columns, text boxes, photos | Produces single-column plain DOCX |
-| **Missing keywords** | JD says "Kubernetes", resume says "k8s" | Adds both (parsers handle one or the other) |
-| **Fabricated titles** | "Ninja", "Guru", "Wizard" | Replaced with canonical titles |
-| **Header contact info** | Email in header/footer | Moved to body (Workday/Greenhouse parse body only) |
+| **Missing metrics** | "improved performance" | Pauses and asks you for the number — **never invents one** |
+| **Non-standard headings** | "Career History", "Skillset", "About Me" | Normalized to EXPERIENCE / SKILLS / EDUCATION / SUMMARY |
+| **Wrong format** | Tables, two columns, text boxes, photos | Produces single-column plain DOCX |
+| **Missing JD keywords** | JD says "Kubernetes", resume says "k8s" | Adds both — parsers handle each variant separately |
+| **Non-canonical titles** | "Ninja", "Guru", "Wizard", compound titles | Replaced with canonical, parser-safe titles |
+| **Header contact info** | Email in header/footer | Moved to body — Workday and Greenhouse parse body only |
 
 ### Produces a real, ready-to-submit DOCX
 
 - Single-column layout (no tables, images, text boxes)
 - Arial font, US Letter, 0.5–0.6" margins
-- True OOXML bullet numbering — not unicode hacks
+- True OOXML bullet numbering — not unicode characters
 - Contact info in body (not header/footer)
 - ATS-safe hyperlinks in body text
 
 ### Scores before and after
 
-`/resume score` runs a Python heuristic across 8 categories and returns a weighted 0–100. Shows exactly what's dragging the score down and by how much.
+`/resume score` runs a Python heuristic across 8 categories and returns a weighted 0–100. Shows exactly what's dragging the score and by how many points.
+
+### Sets realistic expectations
+
+- Typical ceiling on a generic resume: **~94/100**
+- After JD tuning (`/resume tune`): **96–98/100**
+- A score above 80 means the resume parses and ranks — human review decides the rest
 
 ---
 
 ## What It Cannot Do
 
-Be explicit about limits:
+Hard limits — set expectations before you start:
 
-| Cannot | Why |
-|--------|-----|
-| **Invent metrics** | Fabricated numbers are a fireable offense. Asks you instead. |
-| **Guarantee job interviews** | ATS score ≠ hiring decision. Human review still matters. |
-| **Fetch your LinkedIn profile** | Requires LinkedIn MCP extension (optional add-on) |
-| **Submit to job portals** | Produces the DOCX — you submit it |
-| **Do real Jobscan scan** | Heuristic scorer mirrors Jobscan methodology, not API-connected |
-| **Build designer resumes** | Two-column, photo, sidebar resumes score lower on ATS — deliberately not supported |
-| **Apply for remote/visa sponsorship** | Puts your preference on the resume — doesn't apply |
-| **Write cover letters** | Separate skill (see Ecosystem) |
-| **Guarantee accuracy of your own data** | Flags user-provided metrics as "unverifiable" but includes them |
-| **Handle non-English resumes** | English only in v1 |
+### It will never fabricate a number
+
+> **This is the most important rule.**
+
+If a bullet has no metric, the skill stops and asks you. Every time. No exceptions.
+
+```
+Bullet: "improved API performance"
+Skill:  "What was the before and after? (e.g., reduced latency from 800ms to 120ms,
+         or cut error rate from 3% to 0.2%). If you don't remember exactly, estimate."
+```
+
+Why: fabricated metrics (`"reduced costs by 40%"` with no basis) are a fireable offense in most industries. Background checks and technical interviews surface them. The skill will never put a number you didn't provide on your resume.
+
+**What you can do instead:**
+- Estimate conservatively ("~30%", "roughly 2×")
+- Use relative language the skill can format ("meaningfully faster", "significant reduction") — though these score lower than numbers
+- Skip the metric and the skill will write the strongest metric-free version possible
+
+---
+
+### Full limits table
+
+| Cannot | Why | Alternative |
+|--------|-----|-------------|
+| **Invent metrics or achievements** | Fabrication = fireable offense in most fields | Estimate conservatively; skill formats the estimate |
+| **Guarantee callbacks or interviews** | ATS score ≠ hiring decision. Human review still matters | Use score to clear the ATS bar, not as interview predictor |
+| **Fetch LinkedIn profile** | Requires LinkedIn MCP extension | Install the optional LinkedIn extension |
+| **Submit to job portals** | Produces the DOCX — you submit it | Use the DOCX with any ATS portal |
+| **Run real Jobscan API scan** | Heuristic scorer mirrors methodology, not API-connected | Install Jobscan extension for real scan |
+| **Build designer / visual resumes** | Two-column, photo, sidebar layouts score 20–40 pts lower on ATS | Use Figma / Canva for portfolio-facing version, this skill for ATS |
+| **Write cover letters** | Out of scope | Use a cover letter skill |
+| **Auto-apply to jobs** | Out of scope | Use a job search automation tool |
+| **Handle non-English resumes** | Passive voice, verb tally, and filler checks are English-only | v2 roadmap |
+| **Verify your own data** | If you provide a wrong date or metric, the skill includes it | You own accuracy of the source material |
+| **Get you a job at a company that doesn't fit** | Resume quality ≠ role fit | Use the skill for the ATS bar; fit is a different problem |
 
 ---
 
