@@ -22,6 +22,43 @@ Comprehensive ATS resume builder and optimizer for Claude Code. Interview-driven
 
 ---
 
+## A Story First
+
+A friend applied to 47 jobs over 3 months. Zero callbacks. Strong engineer, real experience, 6 years at two companies.
+
+We ran his resume through the scorer: **68/100.**
+
+The issues:
+- "Was responsible for backend services" — passive, no metric
+- "Worked on performance improvements" — vague, no number
+- "Worked on migrations" — verb repeated 6 times in 8 bullets
+- Contact email was in the document header — Workday never parsed it
+
+**One session with `/resume`. Score went to 93. He had three interviews the following week.**
+
+The resume didn't get better because he got more experience. It got better because the words changed.
+
+---
+
+## Spread the Word
+
+If this helped you — **the best thing you can do is share the story, not chase the star.**
+
+Post what your score was before. Post what it became. Tell people what issue it caught.
+
+That's what gets other job seekers here.
+
+If you want to support the project:
+
+- ⭐ [Star the repo](https://github.com/kunalrawat425/fix-my-resume) — helps others discover it
+- 🐛 [Open an issue](https://github.com/kunalrawat425/fix-my-resume/issues) — bugs, edge cases, field gaps
+- 🔀 [Submit a PR](https://github.com/kunalrawat425/fix-my-resume/pulls) — new field templates, extensions, translations
+- 💬 Share your before/after score in [Discussions](https://github.com/kunalrawat425/fix-my-resume/discussions) — helps people know what to expect
+
+> No newsletter. No waitlist. No paywalled tier. Just open source.
+
+---
+
 ## The Problem It Solves
 
 **You're qualified. Your resume isn't getting you in the door.**
@@ -180,6 +217,8 @@ ATS Score: 94.5/100   ← Strong — passes any major scanner
 
 ## Table of Contents
 
+- [A Story First](#a-story-first)
+- [Spread the Word](#spread-the-word)
 - [The Problem It Solves](#the-problem-it-solves)
 - [Why Use This Over Other Tools](#why-use-this-over-other-tools)
 - [How Simple It Is](#how-simple-it-is)
