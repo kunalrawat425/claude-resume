@@ -17,6 +17,8 @@ Comprehensive ATS resume builder and optimizer for Claude Code. Interview-driven
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kunalrawat425/fix-my-resume)](https://github.com/kunalrawat425/fix-my-resume/releases)
 [![Stars](https://img.shields.io/github/stars/kunalrawat425/fix-my-resume?style=social)](https://github.com/kunalrawat425/fix-my-resume/stargazers)
+[![Downloads](https://img.shields.io/github/downloads/kunalrawat425/fix-my-resume/total?label=downloads&color=brightgreen)](https://github.com/kunalrawat425/fix-my-resume/releases)
+[![Try Free](https://img.shields.io/badge/Try%20Free-Claude%20Code-blueviolet?logo=anthropic)](https://claude.ai/claude-code)
 
 ---
 
