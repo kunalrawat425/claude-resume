@@ -16,6 +16,72 @@ Comprehensive ATS resume builder and optimizer for Claude Code. Interview-driven
 [![Claude Code Skill](https://img.shields.io/badge/Claude%20Code-Skill-blue)](https://claude.ai/claude-code)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/github/v/release/kunalrawat425/fix-my-resume)](https://github.com/kunalrawat425/fix-my-resume/releases)
+[![Stars](https://img.shields.io/github/stars/kunalrawat425/fix-my-resume?style=social)](https://github.com/kunalrawat425/fix-my-resume/stargazers)
+
+---
+
+## The Problem It Solves
+
+**You're qualified. Your resume isn't getting you in the door.**
+
+Here's what's actually happening:
+
+1. You apply on LinkedIn, Indeed, Greenhouse, Workday, or Lever
+2. Before any recruiter reads it, an ATS (Applicant Tracking System) scans your resume
+3. The ATS scores it on: keyword match, format parsability, section headings, active language
+4. If the score is too low, your resume goes to the "no" pile — automatically, instantly, silently
+5. You never hear back
+
+**98% of Fortune 500 companies use ATS.** Most rejections happen before a human sees the resume. The problem isn't your experience — it's how the resume is written and formatted.
+
+The most common reasons resumes fail ATS:
+
+| Failure | How common |
+|---------|-----------|
+| Vague bullets with no metrics | Very common — "improved performance", "helped with projects" |
+| Passive voice | Very common — "was responsible for", "tasks included" |
+| Same verb repeated 3+ times | Common — "Worked on X, worked on Y, worked on Z" |
+| Non-standard section headings | Common — "Career History" instead of "Experience" |
+| Tables, columns, text boxes | Common — looks great in Word, ATS reads it as garbage |
+| Missing JD keywords | Very common — you have the skill, but not the exact word |
+| Contact info in header/footer | Common — Workday and Greenhouse skip headers entirely |
+
+This skill finds and fixes all of them.
+
+---
+
+## Why Use This Over Other Tools
+
+| | Fix My Resume | Jobscan | Resume Worded | Generic AI |
+|---|---|---|---|---|
+| **Cost** | Free (Claude Code) | $49/mo | $19/mo | Varies |
+| **Fabricates metrics** | Never — asks you | N/A (scorer only) | N/A (scorer only) | Yes, often |
+| **Interview-driven** | Yes — asks before writing | No | No | Rarely |
+| **Produces ATS-safe DOCX** | Yes | No | No | Sometimes |
+| **Fixes format + language** | Both | Language hints only | Language hints only | Language only |
+| **JD keyword tuning** | Yes | Yes | Yes | Manual |
+| **Open source** | MIT | No | No | No |
+| **Works offline** | Yes (local Claude Code) | No | No | No |
+
+---
+
+## How Simple It Is
+
+One command. That's it.
+
+```bash
+/resume
+```
+
+The skill takes it from there — asks you questions one at a time, collects your achievements, writes the bullets, builds the DOCX, and scores it. No config files. No API keys. No SaaS subscription.
+
+For an existing resume:
+
+```bash
+/resume path/to/your-resume.docx
+```
+
+Reads it, finds every ATS issue, shows them to you, rewrites, rebuilds, rescores. Done in one session.
 
 ---
 
@@ -26,9 +92,10 @@ Most resume advice is generic. Most resume tools are expensive SaaS. Most AI res
 This skill is different:
 
 - **Interview-first** — never writes a word until it knows your actual achievements, metrics, and target role
-- **Refuses to fabricate** — if there's no number, it asks you for one
+- **Refuses to fabricate** — if there's no number, it stops and asks you. Every time.
 - **ATS-native output** — single-column DOCX, Arial font, no tables, no images, no text boxes — exactly what Workday, Greenhouse, and Lever parse correctly
 - **Free** — runs in Claude Code, open source, MIT licensed
+- **No hallucinated metrics** — the #1 failure mode of AI resume tools. This skill asks instead.
 
 ---
 
@@ -111,10 +178,14 @@ ATS Score: 94.5/100   ← Strong — passes any major scanner
 
 ## Table of Contents
 
+- [The Problem It Solves](#the-problem-it-solves)
+- [Why Use This Over Other Tools](#why-use-this-over-other-tools)
+- [How Simple It Is](#how-simple-it-is)
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Commands](#commands)
-- [What It Does](#what-it-does)
+- [Before & After ATS Score](#before--after-ats-score)
+- [What It Can Do](#what-it-can-do)
 - [What It Cannot Do](#what-it-cannot-do)
 - [Use Cases](#use-cases)
 - [Features](#features)
