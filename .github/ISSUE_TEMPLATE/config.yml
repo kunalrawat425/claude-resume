@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Share your before/after score (Discussions)
+    url: https://github.com/kunalrawat425/fix-my-resume/discussions
+    about: Got a score improvement? Share it in Discussions — helps others know what to expect.
+  - name: 📖 Read the docs
+    url: https://github.com/kunalrawat425/fix-my-resume#readme
+    about: Installation, commands, limitations, and before/after examples.
